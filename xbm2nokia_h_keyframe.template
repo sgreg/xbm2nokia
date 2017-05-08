@@ -1,0 +1,20 @@
+/*
+ * xbm2nokia .h template for animation keyframe
+ * Copyright (C) 2017 Sven Gregori <sven@craplab.fi>
+ * Released under MIT License
+ */
+#ifndef _XBM2NOKIA_H_
+#define _XBM2NOKIA_H_
+
+#include "@frame_one@.xbm"
+
+#define XBM2NOKIA_FRAME
+#undef  XBM2NOKIA_FRAME_TRANSISTION
+
+#define xbm2nokia_frame_width  @frame_one@_width
+#define xbm2nokia_frame_height @frame_one@_height
+#define xbm2nokia_frame1_data  @frame_one@_bits
+#define xbm2nokia_frame2_data  @frame_one@_bits
+#define framename "nokia_gfx_keyframe"
+
+#endif
