@@ -14,8 +14,6 @@
 #define SPI_TYPE_COMMAND = 0;
 #define SPI_TYPE_DATA    = 1;
 
-#define spi_cs_high()   do { PORTB |=  (1 << PB2); } while (0)
-#define spi_cs_low()    do { PORTB &= ~(1 << PB2); } while (0)
 #define spi_dc_high()   do { PORTB |=  (1 << PB1); } while (0)
 #define spi_dc_low()    do { PORTB &= ~(1 << PB1); } while (0)
 #define lcd_rst_high()  do { PORTB |=  (1 << PB0); } while (0)
@@ -39,15 +37,12 @@ spi_init(void)
  */
 static void
 spi_send_command(uint8_t command) {
-    spi_cs_low();
     spi_dc_low();
 
     SPDR = command;
     while (!(SPSR & (1 << SPIF))) {
         /* wait */
     }
-
-    spi_cs_high();
 }
 
 /**
@@ -57,15 +52,12 @@ spi_send_command(uint8_t command) {
  */
 static void
 spi_send_data(uint8_t data) {
-    spi_cs_low();
     spi_dc_high();
 
     SPDR = data;
     while (!(SPSR & (1 << SPIF))) {
         /* wait */
     }
-
-    spi_cs_high();
 }
 
 /* everything SPI - the end */

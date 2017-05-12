@@ -23,7 +23,7 @@
  *  14  PB0     O   LCD Reset
  *
  *  15  PB1     O   LCD D/C
- *  16  PB2     O   LCD /CS
+ *  16  PB2     (unused)    (was LCD /CE)
  *  17  PB3     O   LCD MOSI / SerProg MOSI
  *  18  PB4     I   SerProg MISO
  *  19  PB5     O   LCD SCK / SerProg SCK
@@ -35,7 +35,7 @@
  *  25  PC2     (unused)
  *  26  PC3     (unused)
  *  27  PC4     (unused)
- *  28  PC5     O   Performance test pin
+ *  28  PC5     (unused)
  *
  */
 #include <string.h>
