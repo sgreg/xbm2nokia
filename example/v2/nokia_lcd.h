@@ -16,7 +16,6 @@
 #define LCD_Y_RES 48
 #define LCD_MEMORY_SIZE     ((LCD_X_RES * LCD_Y_RES) / 8)
 
-void nokia_lcd_reset(void);
 void nokia_lcd_init(void);
 void nokia_lcd_fullscreen(const uint8_t data[]);
 

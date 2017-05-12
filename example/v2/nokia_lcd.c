@@ -16,8 +16,6 @@
 
 #define spi_dc_high()   do { PORTB |=  (1 << PB1); } while (0)
 #define spi_dc_low()    do { PORTB &= ~(1 << PB1); } while (0)
-#define lcd_rst_high()  do { PORTB |=  (1 << PB0); } while (0)
-#define lcd_rst_low()   do { PORTB &= ~(1 << PB0); } while (0)
 
 
 /**
@@ -62,26 +60,6 @@ spi_send_data(uint8_t data) {
 
 /* everything SPI - the end */
 
-
-/**
- * Reset Nokia LCD.
- *
- * TLS8204 datashet states a >3us low pulse is requred on the
- * LCD reset line. We'll pulse it for 100us for no real reason,
- * to be on the safe side.
- *
- * Note, if running out of I/O pins, the LCD reset pin can be
- * connected via RC circuit to delay the high level on power up.
- * However, this will require a power cycle to hard reset the
- * LCD when resetting the uC.
- */
-void
-nokia_lcd_reset(void)
-{
-    lcd_rst_low();
-    _delay_us(100);
-    lcd_rst_high();
-}
 
 /**
  * Initialize Nokia 3310/5110 LCD.

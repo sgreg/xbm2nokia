@@ -20,7 +20,7 @@
  *  11  PD5     (unused)
  *  12  PD6     (unused)
  *  13  PD7     (unused)
- *  14  PB0     O   LCD Reset
+ *  14  PB0     (unused)    (was LCD Reset)
  *
  *  15  PB1     O   LCD D/C
  *  16  PB2     (unused)    (was LCD /CE)
@@ -98,9 +98,7 @@ main(void) {
     PORTC = 0x00;
 
 
-    sei();
     spi_init();
-    nokia_lcd_reset();
     nokia_lcd_init();
     gfx_init();
 
