@@ -139,32 +139,6 @@ nokia_lcd_fullscreen(const uint8_t data[])
 
 
 #ifdef NOKIA_GFX_ANIMATION
-#ifdef NOKIA_GFX_ANIMATION_FULL_UPDATE
-/**
- * Display animation frame diff.
- *
- * Updates internal LCD memory buffer with animation frame diff
- * and send the full buffer to the LCD via SPI afterwards.
- *
- * @param frame frame transition data
- */
-void
-nokia_lcd_diff_frame(const struct nokia_gfx_frame *frame)
-{
-    uint16_t i;
-    uint16_t cnt = pgm_read_word(&(frame->diffcnt));
-    struct nokia_gfx_diff diff;
-
-    for (i = 0; i < cnt; i++) {
-        diff.addr = pgm_read_word(&(frame->diffs[i].addr));
-        diff.data = pgm_read_byte(&(frame->diffs[i].data));
-        //nokia_lcd_memory[diff.addr] = diff.data;
-    }
-    //nokia_lcd_update();
-}
-
-#else /* NOKIA_GFX_ANIMATION_FULL_UPDATE */
-
 /**
  * Display animation frame diff.
  *
@@ -184,7 +158,6 @@ nokia_lcd_update_diff(const struct nokia_gfx_frame *frame)
     for (i = 0; i < cnt; i++) {
         diff.addr = pgm_read_word(&(frame->diffs[i].addr));
         diff.data = pgm_read_byte(&(frame->diffs[i].data));
-        //nokia_lcd_memory[diff.addr] = diff.data;
 
         y = diff.addr / 84;
         x = diff.addr - ((uint16_t) (y * 84));
@@ -193,6 +166,5 @@ nokia_lcd_update_diff(const struct nokia_gfx_frame *frame)
         spi_send_data(diff.data);
     }
 }
-#endif /* NOKIA_GFX_ANIMATION_FULL_UPDATE */
 #endif /* NOKIA_GFX_ANIMATION */
 
