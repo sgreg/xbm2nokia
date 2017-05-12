@@ -42,9 +42,6 @@
  */
 #define NOKIA_GFX_ANIMATION_FULL_UPDATE
 
-extern unsigned char nokia_lcd_memory[];
-
-#define nokia_lcd_clear_memory() memset(&nokia_lcd_memory, 0, LCD_MEMORY_SIZE)
 void nokia_lcd_reset(void);
 void nokia_lcd_init(void);
 void nokia_lcd_fullscreen(const uint8_t data[]);

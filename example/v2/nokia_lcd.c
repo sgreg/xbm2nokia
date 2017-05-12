@@ -71,9 +71,6 @@ spi_send_data(uint8_t data) {
 /* everything SPI - the end */
 
 
-/* internal LCD memory buffer */
-unsigned char nokia_lcd_memory[LCD_MEMORY_SIZE];
-
 /**
  * Reset Nokia LCD.
  *
@@ -117,30 +114,8 @@ nokia_lcd_init(void)
 }
 
 /**
- * Update LCD.
- *
- * Sending full content of the internal LCD memory buffer via SPI.
- */
-static void
-nokia_lcd_update(void)
-{
-    uint8_t x;
-    uint8_t y;
-                   
-    for (y = 0; y < LCD_Y_RES / 8; y++) {
-        spi_send_command(0x80);     // set X addr to 0x00
-        spi_send_command(0x40 | y); // set Y addr to y
-        for (x = 0; x < LCD_X_RES; x++) {
-            spi_send_data(nokia_lcd_memory[y * LCD_X_RES + x]); // write data
-        }
-    }
-}
-
-/**
  * Display fullscreen image on the LCD.
- *
- * Writes given data into internal LCD memory buffer and sends its
- * content afterwards via SPI to the LCD itself.
+ * Writes given data straight to the LCD via SPI.
  *
  * Note, data is expected to be stored in PROGMEM.
  *
@@ -149,8 +124,17 @@ nokia_lcd_update(void)
 void
 nokia_lcd_fullscreen(const uint8_t data[])
 {
-    memcpy_P(nokia_lcd_memory, (PGM_P) data, 504);
-    nokia_lcd_update();
+    uint8_t x;
+    uint8_t y;
+                   
+    for (y = 0; y < LCD_Y_RES / 8; y++) {
+        spi_send_command(0x80);     // set X addr to 0x00
+        spi_send_command(0x40 | y); // set Y addr to y
+        for (x = 0; x < LCD_X_RES; x++) {
+            /* read data straight from PROGMEM variable and send it */
+            spi_send_data(pgm_read_byte(&(data[y * LCD_X_RES + x])));
+        }
+    }
 }
 
 
@@ -174,9 +158,9 @@ nokia_lcd_diff_frame(const struct nokia_gfx_frame *frame)
     for (i = 0; i < cnt; i++) {
         diff.addr = pgm_read_word(&(frame->diffs[i].addr));
         diff.data = pgm_read_byte(&(frame->diffs[i].data));
-        nokia_lcd_memory[diff.addr] = diff.data;
+        //nokia_lcd_memory[diff.addr] = diff.data;
     }
-    nokia_lcd_update();
+    //nokia_lcd_update();
 }
 
 #else /* NOKIA_GFX_ANIMATION_FULL_UPDATE */
@@ -200,7 +184,7 @@ nokia_lcd_update_diff(const struct nokia_gfx_frame *frame)
     for (i = 0; i < cnt; i++) {
         diff.addr = pgm_read_word(&(frame->diffs[i].addr));
         diff.data = pgm_read_byte(&(frame->diffs[i].data));
-        nokia_lcd_memory[diff.addr] = diff.data;
+        //nokia_lcd_memory[diff.addr] = diff.data;
 
         y = diff.addr / 84;
         x = diff.addr - ((uint16_t) (y * 84));
