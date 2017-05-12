@@ -4,7 +4,7 @@ F_CPU = 8000000
 # Default target.
 all: example.hex
 
-OBJS = example.o nokia_lcd.o nokia_gfx.o
+OBJS = example.o nokia_lcd.o ../nokia_gfx.o
 
 # Fuses
 # low: CLK 8MHz internal oscillator, no clock divider, 6ck/14ck + 65ms
@@ -20,7 +20,7 @@ CC = avr-gcc
 OBJCOPY = avr-objcopy
 SIZE = avr-size
 
-CFLAGS = -g -Os -std=gnu99 -I. -Iusbdrv -I../lib \
+CFLAGS = -g -Os -std=gnu99 -I. -I.. \
 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums \
 -Wall -Wextra -Wstrict-prototypes \
 -DF_CPU=$(F_CPU) -mmcu=$(MCU) 
@@ -62,7 +62,7 @@ clean:
 distclean: clean
 	rm -f *.elf
 	rm -f *.hex
-	rm -f *.lst
+	rm -f *.lst ../*.lst
 	rm -f *.map
 
 # Listing of phony targets.
