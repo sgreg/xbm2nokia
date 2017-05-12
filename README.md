@@ -2,7 +2,9 @@
 Converting [XBM](https://en.wikipedia.org/wiki/X_BitMap)
 images to raw data for Nokia 3310/5110 LCDs
 
-See also: [the accompanying blog article about this](http://sgreg.fi/blog/article/xbm-images-and-animations-on-a-nokia-lcd).
+See also:
+* [the accompanying blog article about this](http://sgreg.fi/blog/article/xbm-images-and-animations-on-a-nokia-lcd)
+* [blog article about exaple code optimization](http://sgreg.fi/blog/article/code-optimization-for-xbm-images-on-nokia-lcd)
 
 ### Introduction
 
